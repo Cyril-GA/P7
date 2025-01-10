@@ -1,8 +1,12 @@
 const galleryElement = document.querySelector(".gallery");
+const filtersElement = document.querySelector(".filters");
 
 // Tableaux vide pour ranger les données de l'API
 let works = [];
-let categories = []
+let categories = [];
+
+let buttons = [];
+let currentIndex = 0;
 
 // Récupération des Travaux sur l'API puis désérialisation
 async function getWorks() {
@@ -12,6 +16,7 @@ async function getWorks() {
    works = data;
 }
 
+// Récupération des Catégories sur l'API puis désérialisation
 async function getCategories() {
     const response = await fetch("http://localhost:5678/api/categories");
     const data = await response.json();
@@ -44,11 +49,64 @@ async function init() {
     await getCategories()
     console.log('après fetch', categories)
     createWorks(works);
+    createButtons(categories);
 }
 
 init();
 
 
-//Ajout à la galerie des travaux récupéré
 
+
+// Ajout/Retrait classe
+function addClass() {
+    const selectedButton = buttons[currentIndex];
+	selectedButton.classList.add("button_selected");
+}
+
+function removeClass() {
+    const removeButton = buttons[currentIndex];
+	removeButton.classList.remove("button_selected");
+}
+
+
+// Création des boutons
+
+function createButton(category) {
+    const button = document.createElement("button");
+    button.innerText = category.name;
+
+    if (category.id === 0) {
+        button.classList.add("button_selected");
+    }
+
+    button.addEventListener("click", () => {
+        const filteredWorks = works.filter(work => work.categoryId === category.id);
+
+        if (category.id === 0) {
+            galleryElement.innerHTML = "";
+            removeClass();
+            currentIndex = category.id;
+            createWorks(works);
+            addClass();
+            return
+        }
+        
+        galleryElement.innerHTML = "";
+        createWorks(filteredWorks);
+
+        removeClass();
+        currentIndex = category.id;
+        addClass();
+    });
+
+    filtersElement.appendChild(button);
+    buttons.push(button)
+}
+
+function createButtons(categories) {
+    createButton({ name: "Tous", id: 0 });
+    categories.forEach(category => {
+        createButton(category);
+    });
+}
 
