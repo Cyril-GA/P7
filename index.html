@@ -7,18 +7,22 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/ea77c5d6f9.js" crossorigin="anonymous"></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script defer type="module" src="assets/script.js"></script>
 </head>
 <body>
+	<div class="editionMode">
+		<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>
+	</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li><a href="login.html">login</a></li>
+			<li><a href="#portfolio">projets</a></li>
+			<li><a href="#contact">contact</a></li>
+			<li ><a href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -37,6 +41,48 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
+		<a href="#modal" class="js-modal"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
+
+		<aside id="modal" class="modal" style="display: none">
+			<div class="firstModal modal-wrapper js-modal-stop">
+				<i class="js-modal-close fa-solid fa-xmark"></i>
+				<h3>Galerie photo</h3>
+				<div class="smallGallery">
+					
+				</div>
+				<button class="btnAjouter">Ajouter une photo</button>
+			</div>
+			<div class="secondModal modal-wrapper js-modal-stop" style="display: none">
+				<i class="fa-solid fa-arrow-left"></i>
+				<i class="js-modal-close fa-solid fa-xmark"></i>
+				<h3>Ajout photo</h3>
+				<form class="addPictureForm" action="#" method="post">
+					<div class="form">
+						<div class="addPicture">
+							<i class="fa-regular fa-image"></i>
+							<button id="fileSelect" type="button">+ Ajouter photo</button>
+							<p>jpg, png : 4mo max</p>
+							<label for="addPicture"></label>
+							<input 
+								type="file" 
+								name="addPicture" 
+								id="addPicture" 
+								accept="image/jpg, image/png" 
+								style="display: none"
+								required="required">
+						</div>
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" required="required">
+						<label for="categorie">Catégorie</label>
+						<select name="categorie" id="categorie" required>
+						
+						</select>
+					</div>
+					<input type="submit" value="Valider">
+				</form>
+			</div>
+		</aside>
+
 		<div class="filters">
 			
 		</div>
