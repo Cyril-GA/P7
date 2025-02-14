@@ -200,7 +200,8 @@ nav li:hover {
 	margin-bottom: 20px;
 }
 #contact form,
-#logIn form{
+#logIn form,
+#modal form{
 	text-align: left;
 	margin-top:30px;
 	display: flex;
@@ -208,7 +209,8 @@ nav li:hover {
 }
 
 #contact input,
-#logIn input, 
+#logIn input,
+#modal input, 
 select {
 	height: 50px;
 	font-size: 1.2em;
@@ -216,7 +218,8 @@ select {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 #contact label,
-#logIn label {
+#logIn label,
+#modal label {
 	margin: 2em 0 1em 0;
 	font-weight: 500;
 }
