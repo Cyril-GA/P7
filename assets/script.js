@@ -46,10 +46,8 @@ function createWorks(data) {
 
 // Appel des fonctions
 async function init() {
-    console.log('avant fetch', categories)
     await getWorks();
     await getCategories()
-    console.log('après fetch', categories)
     createWorks(works);
     createButtons(categories);
     createSmallWorks(works);
@@ -61,7 +59,7 @@ init();
 
 
 
-// Ajout/Retrait classe
+// Ajout/Retrait class bouton selectionné
 function addClass() {
     const selectedButton = buttons[currentIndex];
 	selectedButton.classList.add("button_selected");
@@ -177,7 +175,6 @@ const editionMode = document.querySelector('.editionMode');
 const login = document.querySelector('a[href="login.html"]');
 const body = document.querySelector('body');
 const portfolioTitle = document.querySelector('#portfolio h2');
-console.log(portfolioTitle)
 
 if (authToken) { 
     btnModifier.classList.remove('hidden');
@@ -257,9 +254,7 @@ smallGallery.addEventListener("click", async (event) => {
             }
             
             updateUI();
-            console.log(`L'élément avec l'ID ${workId} a été supprimé du serveur.`);
         } catch (error) {
-            console.error("Une erreur s'est produite :", error);
             errorMessage.style.display = null;
         }
     }
@@ -281,7 +276,7 @@ function createCategorie(data) {
     categorie.appendChild(firstOption);
     data.forEach(category => {
         const option = document.createElement('option');
-        option.value = category.name;
+        option.value = category.id;
         option.innerText = category.name;
 
         categorie.appendChild(option);
@@ -310,9 +305,50 @@ addPicture.addEventListener("change", (event) => {
 //  - Preventdefault sur le submit : Ajout photo
 //  - autoriser uniquement un seul document
 //  - afficher le bouton si pas de document
-// galleryModal.querySelector("form").addEventListener('submit', (event) => {
-    
-// } )
+const inputAddPicture = document.getElementById('addPicture');
+inputAddPicture.addEventListener('change', function() {
+    const file = this.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function(){
+        const imageUrl = reader.result;
+    }
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+})
+
+const addPictureForm = document.querySelector('.addPictureForm');
+addPictureForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(addPictureForm)
+
+    const response = await fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            "Authorization": `Bearer ${authToken}`
+        },
+        body: data
+
+    })
+
+    if (response.ok) {
+        updateUI();
+        addPictureForm.reset();
+        document.querySelector('.newPicture').remove();
+        labelFile.querySelector("button").style.display = 'block';
+        document.querySelector('.js-modal-close').click();
+    }
+    // Création de l'objet du nouveau Work
+    // const newWork = {
+    //     image: event.target.querySelector('[name="addPicture]').value,
+    //     title: event.target.querySelector('[name="title"]').value,
+    //     category: event.target.querySelector('[name="categorie"]').value
+    // }
+
+
+} )
+
 
 
 // Modifier le bouton submit quand les champs sont rempli
@@ -336,6 +372,5 @@ function checkFormCompletion () {
 addPictureFile.addEventListener('change', checkFormCompletion);
 addPictureTitle.addEventListener('input', checkFormCompletion);
 addPictureSelect.addEventListener('change', checkFormCompletion);
-
 addPictureSubmit.classList.add('disabled');
 

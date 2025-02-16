@@ -24,8 +24,10 @@ formulaireLogin.addEventListener("submit", async function (event) {
 
     if (!response.ok) {
         document.querySelector(".error").textContent = 'Erreur dans l\'identifiant ou le mot de passe';
-
-        // Est ce qu'il faut vider le token en prévention si reconnexion ultérieur raté ? 
+        document.querySelector(".error").style.color = 'red';
+        setTimeout(() => {
+            document.querySelector(".error").textContent = '';
+        }, 10000);
     }
 
     if (response.ok) {
@@ -34,9 +36,8 @@ formulaireLogin.addEventListener("submit", async function (event) {
         const token = data.token;
         sessionStorage.setItem("authToken", token);
 
-        console.log("Token sauvegardé", token);
-
         // Redicréction
         window.location.href = "index.html"
     }
 })
+

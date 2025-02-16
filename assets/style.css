@@ -143,8 +143,8 @@ nav li:hover {
 	text-align: center;
 }
 #portfolio a {
-	position: absolute; /* Place le bouton indépendamment du flux normal */
-  	right: 300px;
+	position: absolute;
+  	left: 65%;
 	top: 10px; 
 }
 .filters {
@@ -163,6 +163,8 @@ nav li:hover {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 16px;
+	overflow: hidden;
+	line-height: inherit;
 }
 .filters button:hover,
 .filters .button_selected {
@@ -274,6 +276,8 @@ footer nav ul {
 .modal-wrapper {
 	background-color: #fff;
 	width: 630px;
+	max-height: -webkit-fill-available;
+	overflow: auto;
 	border-radius: 10px;
 }
 .modal-wrapper .js-modal-close {
@@ -417,3 +421,18 @@ input[type="submit"].disabled {
 	padding-right: 12px;
 }
 
+@media (max-width: 768px) {
+	#portfolio a {
+		top: 50px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+@media (max-width: 425px) {
+	nav ul {
+		flex-direction: column;
+	}
+	nav ul li {
+		padding: 5px;
+	}
+}
